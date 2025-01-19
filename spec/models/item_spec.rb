@@ -105,30 +105,35 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
       end
 
-      it 'priceが全角英数字では登録できない' do
+      it 'priceが全角英数字では出品できない' do
         @item.price = '１２３４'
         @item.valid?
         expect(@item.errors.full_messages).to include('Price is not a number')
       end
-      it 'priceが漢字では登録できない' do
+      it 'priceが漢字では出品できない' do
         @item.price = '商品価格'
         @item.valid?
         expect(@item.errors.full_messages).to include('Price is not a number')
       end
-      it 'priceがひらがなでは登録できない' do
+      it 'priceがひらがなでは出品できない' do
         @item.price = 'しょうひんかかく'
         @item.valid?
         expect(@item.errors.full_messages).to include('Price is not a number')
       end
-      it 'priceがカタカナでは登録できない' do
+      it 'priceがカタカナでは出品できない' do
         @item.price = 'ショウヒンカカク'
         @item.valid?
         expect(@item.errors.full_messages).to include('Price is not a number')
       end
-      it 'priceが半角カタカナでは登録できない' do
+      it 'priceが半角カタカナでは出品できない' do
         @item.price = 'ｼｮｳﾋﾝｶｶｸ'
         @item.valid?
         expect(@item.errors.full_messages).to include('Price is not a number')
+      end
+      it 'userが紐付いていない場合は出品できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include('User must exist')
       end
     end
   end
