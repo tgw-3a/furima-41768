@@ -10,8 +10,8 @@ function price_calc() {
       let fee = Math.floor(price * 0.1);
       let profit = price - fee;
 
-      priceFee.innerHTML = fee;
-      priceProfit.innerHTML = profit;
+      priceFee.innerHTML = fee.toLocaleString();
+      priceProfit.innerHTML = profit.toLocaleString();
     });
   };
 };
