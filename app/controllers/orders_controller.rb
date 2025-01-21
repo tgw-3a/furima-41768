@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item
+  before_action :correct_user
 
   def index
     @order_address = OrderAddress.new
@@ -26,5 +27,9 @@ class OrdersController < ApplicationController
 
   def set_item
     @item = Item.find(params[:item_id])
+  end
+
+  def correct_user
+    redirect_to root_path unless @item.user_id != current_user.id
   end
 end
