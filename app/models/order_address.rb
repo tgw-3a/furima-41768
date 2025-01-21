@@ -6,7 +6,9 @@ class OrderAddress
     validates :user_id
     validates :item_id
     validates :order_id
-    validates :postal_code, format: { allow_blank: true, with: /\A[0-9]{3}-[0-9]{4}\z/, message: 'is invalid. Enter it as follows (e.g. 123-4567)' }
+    validates :postal_code,
+              format: { allow_blank: true, with: /\A[0-9]{3}-[0-9]{4}\z/,
+                        message: 'is invalid. Enter it as follows (e.g. 123-4567)' }
     validates :prefecture_id, numericality: { other_than: 0, message: "can't be blank" }
     validates :city
     validates :house_number
