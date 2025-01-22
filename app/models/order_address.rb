@@ -3,7 +3,7 @@ class OrderAddress
   attr_accessor :user_id, :item_id, :postal_code, :prefecture_id, :city, :house_number, :building_name, :phone_number, :order_id,
                 :token
 
-    validate :different_user_and_item_owner
+  validate :different_user_and_item_owner
   with_options presence: true do
     validates :user_id
     validates :item_id
@@ -27,10 +27,9 @@ class OrderAddress
   private
 
   def different_user_and_item_owner
-    if item_id != nil
-      if user_id == Item.find(item_id).user_id
-        errors.add(:user_id, "can't order own item")
-      end
-    end
+    return if item_id.nil?
+    return unless user_id == Item.find(item_id).user_id
+
+    errors.add(:user_id, "can't order own item")
   end
 end
