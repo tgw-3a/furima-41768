@@ -2,7 +2,8 @@ let payjp = null;
 
 const pay = () => {
   if (!payjp){
-    payjp = Payjp(window.PAYJP_PUBLIC_KEY);
+    const publicKey = gon.public_key
+    payjp = Payjp(publicKey);
   };
   const elements = payjp.elements();
   const numberElement = elements.create('cardNumber');
