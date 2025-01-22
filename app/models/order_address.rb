@@ -14,7 +14,7 @@ class OrderAddress
     validates :city
     validates :house_number
     validates :phone_number, numericality: { allow_blank: true, only_integer: true },
-                             length: { in: 10..11 }
+                             length: { allow_blank: true, in: 10..11 }
   end
 
   def save
