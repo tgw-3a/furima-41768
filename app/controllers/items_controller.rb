@@ -42,7 +42,6 @@ class ItemsController < ApplicationController
   private
 
   def set_item
-    binding.pry
     @item = Item.find(params[:id])
   end
 
