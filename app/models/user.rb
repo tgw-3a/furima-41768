@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :items
   has_many :orders
 
-  validates :password, format: { allow_blank: true, with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i }
+  validates :password, format: { allow_blank: true, with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i, message: 'must contain both letters and numbers'}
   with_options presence: true do
     validates :nickname
     validates :last_name,

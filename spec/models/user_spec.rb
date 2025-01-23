@@ -80,43 +80,43 @@ RSpec.describe User, type: :model do
         @user.password = 'Testtest'
         @user.password_confirmation = 'Testtest'
         @user.valid?
-        expect(@user.errors.full_messages).to include('Password is invalid')
+        expect(@user.errors.full_messages).to include('Password must contain both letters and numbers')
       end
       it 'passwordが半角数字のみでは登録できない' do
         @user.password = '123456'
         @user.password_confirmation = '123456'
         @user.valid?
-        expect(@user.errors.full_messages).to include('Password is invalid')
+        expect(@user.errors.full_messages).to include('Password must contain both letters and numbers')
       end
       it 'passwordが全角英数字では登録できない' do
         @user.password = 'Ｐａｓｓ１２３４'
         @user.password_confirmation = 'Ｐａｓｓ１２３４'
         @user.valid?
-        expect(@user.errors.full_messages).to include('Password is invalid')
+        expect(@user.errors.full_messages).to include('Password must contain both letters and numbers')
       end
       it 'passwordが漢字では登録できない' do
         @user.password = '合言葉'
         @user.password_confirmation = '合言葉'
         @user.valid?
-        expect(@user.errors.full_messages).to include('Password is invalid')
+        expect(@user.errors.full_messages).to include('Password must contain both letters and numbers')
       end
       it 'passwordがひらがなでは登録できない' do
         @user.password = 'あいことば'
         @user.password_confirmation = 'あいことば'
         @user.valid?
-        expect(@user.errors.full_messages).to include('Password is invalid')
+        expect(@user.errors.full_messages).to include('Password must contain both letters and numbers')
       end
       it 'passwordがカタカナでは登録できない' do
         @user.password = 'アイコトバ'
         @user.password_confirmation = 'アイコトバ'
         @user.valid?
-        expect(@user.errors.full_messages).to include('Password is invalid')
+        expect(@user.errors.full_messages).to include('Password must contain both letters and numbers')
       end
       it 'passwordが半角カタカナでは登録できない' do
         @user.password = 'ｱｲｺﾄﾊﾞ'
         @user.password_confirmation = 'ｱｲｺﾄﾊﾞ'
         @user.valid?
-        expect(@user.errors.full_messages).to include('Password is invalid')
+        expect(@user.errors.full_messages).to include('Password must contain both letters and numbers')
       end
       it 'passwordとpassword_confirmationが一致していないと登録できない' do
         @user.password = 'Test123'
