@@ -68,7 +68,7 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include('Postal code is invalid. Enter it as follows (e.g. 123-4567)')
       end
-      it 'postal_codeの右辺が4桁以上だと登録できない' do
+      it 'postal_codeの右辺が5桁以上だと登録できない' do
         @order_address.postal_code = '123-45678'
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include('Postal code is invalid. Enter it as follows (e.g. 123-4567)')
