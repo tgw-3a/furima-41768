@@ -1,3 +1,36 @@
+## インフラ構成・使用技術
+
+本アプリケーションでは、本番環境を想定した以下の技術を導入しています。
+
+- **Docker**：アプリケーション、Nginx、Cloudflaredをコンテナ化し、一貫性のある環境を構築
+- **Nginx**：リバースプロキシサーバーとして導入。Pumaサーバー（Rails）との間に立ち、静的ファイル配信・リクエスト分散を最適化
+- **Cloudflare Tunnel**：Cloudflare経由でHTTPS接続を提供し、安全なドメイン公開。
+Tunnel内部も暗号化されており、自己署名証明書やLet's Encryptを用いずにセキュアな通信を実現。
+- **SSH + GPG署名付きコミット**：安全なバージョン管理と認証
+- **AWS非使用**：AWSに依存せず、自前でセキュアな本番運用環境を構築可能なスキルを実証
+
+## 構成概要図（簡略）
+Client ⇄ (HTTPS) ⇄ Cloudflare ⇄ (HTTPS) ⇄ Nginx (Reverse Proxy) ⇄ Puma (Rails)
+
+## こだわりポイント
+
+- 本番運用を見据えたHTTPS対応
+- Docker Composeで一括起動可能な環境構成
+- 極力軽量な構成を維持しつつ、セキュリティ・保守性を両立
+
+## 開発環境情報
+
+| 項目 | バージョン |
+|:---|:---------|
+| Docker | 28.1.1 |
+| Docker Compose | v2.35.1 |
+| Ruby | 3.2.0 |
+| Rails | 7.0.8.7 |
+| PostgreSQL | 15.12 |
+| Nginx | 1.28.0 |
+| Cloudflared | 2025.4.0 |
+
+
 # テーブル設計
 
 ## users テーブル
