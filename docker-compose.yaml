@@ -1,0 +1,63 @@
+services:
+  db:
+    image: postgres:14
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: furima_production
+      TZ: Asia/Tokyo
+    env_file:
+      - ../shared/.env
+    networks:
+      - furima-net
+
+  web:
+    build:
+      context: .
+      args:
+        RAILS_ENV: production
+    volumes:
+      - .:/app
+      - ../shared/config/database.yml:/app/config/database.yml:ro
+      - /app/tmp
+    environment:
+      TZ: Asia/Tokyo
+    env_file:
+      - ../shared/.env
+    depends_on:
+      - db
+    networks:
+      - furima-net
+    ports:
+      - "3000:3000"
+
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "443:443"
+    volumes:
+      - /etc/nginx/ssl:/etc/nginx/ssl
+      - ./public:/app/public
+      - ./nginx/conf.d/furima-41768.conf:/etc/nginx/conf.d/furima-41768.conf:ro
+    environment:
+      TZ: Asia/Tokyo
+    depends_on:
+      - web
+    networks:
+      - furima-net
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARED_TUNNEL_TOKEN}
+    env_file:
+      - ../shared/.env
+    networks:
+      - furima-net
+
+volumes:
+  postgres-data:
+
+networks:
+  furima-net:
